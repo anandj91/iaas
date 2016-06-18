@@ -23,6 +23,8 @@ if [ ! -d $KAFKA_DIR ]; then
 fi
 
 pushd $KAFKA_DIR
+(./bin/kafka-server-stop.sh) || true
+(./bin/zookeeper-server-stop.sh) || true
 ./bin/zookeeper-server-start.sh config/zookeeper.properties &
 ./bin/kafka-server-start.sh config/server.properties &
 popd
