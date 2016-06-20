@@ -4,6 +4,9 @@ if [ ! `grep "skip-grant-tables" $MYSQL_CONF` ]; then
 	echo "[mysqld]" >> $MYSQL_CONF
 	echo "skip-grant-tables" >> $MYSQL_CONF
 fi
+for d in $MYSQL_DBS; do
+	echo "CREATE DATABASE IF NOT EXISTS $d" | mysql
+done
 service mysql restart
 
 # Kafka setup
