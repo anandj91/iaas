@@ -14,8 +14,8 @@ fi
 
 pushd $KAFKA_DIR
 add_to_file_if_not_already $KAFKA_CONFIG "advertised.host.name=127.0.0.1"
-(./bin/kafka-server-stop.sh) || true
-(./bin/zookeeper-server-stop.sh) || true
+jps | grep Kafka | awk '{print $1}' | xargs kill -9
+jps | grep QuorumPeerMain | awk '{print $1}' | xargs kill -9
 ./bin/zookeeper-server-start.sh $ZK_CONFIG &
 ./bin/kafka-server-start.sh $KAFKA_CONFIG &
 sleep 4
