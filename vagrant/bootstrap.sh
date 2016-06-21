@@ -10,14 +10,14 @@ SETUP_SCRIPT=$SYNC_DIR/vagrant/setup.sh
 function add_to_file_if_not_already {
 	FILE=$1
 	LINE=$2
-	(grep "$LINE" $FILE) || (echo -e "$LINE" >> $FILE)
+	(egrep "^$LINE$" $FILE) || (echo -e "$LINE" >> $FILE)
 }
 
 function edit_file_if_not_already {
 	FILE=$1
 	FROM_LINE=$2
 	TO_LINE=$3
-	(egrep "$FROM_LINE" $FILE) || (sed -i "s/$FROM_LINE/$TO_LINE/g" $FILE)
+	(sed -i "s/$FROM_LINE/$TO_LINE/g" $FILE)
 }
 
 pushd $ROOT_DIR
