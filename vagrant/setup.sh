@@ -5,8 +5,9 @@ if [ ! `grep "skip-grant-tables" $MYSQL_CONF` ]; then
 	echo "skip-grant-tables" >> $MYSQL_CONF
 fi
 service mysql restart
-for d in $MYSQL_DBS; do
-	echo "CREATE DATABASE IF NOT EXISTS $d" | mysql
+for d in ${MYSQL_DBS[@]}; do
+	echo "$d"
+	echo "CREATE DATABASE IF NOT EXISTS $d;" | mysql
 done
 
 # Kafka setup
@@ -22,7 +23,7 @@ jps | grep QuorumPeerMain | awk '{print $1}' | xargs kill -9
 ./bin/zookeeper-server-start.sh $ZK_CONFIG &
 ./bin/kafka-server-start.sh $KAFKA_CONFIG &
 sleep 4
-for t in $KAFKA_TOPICS; do
+for t in ${KAFKA_TOPICS[@]}; do
 	./bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic $t
 	./bin/kafka-topics.sh --zookeeper localhost:2181 --create --replication-factor 1 --partitions 1 --topic $t
 done
