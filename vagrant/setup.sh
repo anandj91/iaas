@@ -28,4 +28,8 @@ for t in ${KAFKA_TOPICS[@]}; do
 done
 popd
 
-
+# Cassandra setup
+edit_file_if_not_already $CASSANDRA_CONF "^listen_address: localhost$" "listen_address: 127.0.0.1"
+edit_file_if_not_already $CASSANDRA_CONF "^rpc_address: localhost$" "rpc_address: 0.0.0.0"
+add_to_file_if_not_already $CASSANDRA_CONF "broadcast_rpc_address: 127.0.0.1"
+service cassandra restart
