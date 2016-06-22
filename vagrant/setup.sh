@@ -1,8 +1,7 @@
 # MySql setup
 edit_file_if_not_already $MYSQL_CONF "bind-address\s*= 127.0.0.1" "bind-address = 0.0.0.0"
 if [ ! `grep "skip-grant-tables" $MYSQL_CONF` ]; then
-	echo "[mysqld]" >> $MYSQL_CONF
-	echo "skip-grant-tables" >> $MYSQL_CONF
+	sed -i "s/^\[mysqld\]$/[mysqld]\nskip-grant-tables/g" $MYSQL_CONF
 fi
 service mysql restart
 for d in ${MYSQL_DBS[@]}; do
