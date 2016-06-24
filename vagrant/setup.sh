@@ -20,8 +20,9 @@ add_to_file_if_not_already $KAFKA_CONFIG "advertised.host.name=127.0.0.1"
 (./bin/kafka-server-stop.sh) || true
 (./bin/zookeeper-server-stop.sh) || true
 ./bin/zookeeper-server-start.sh $ZK_CONFIG &
+sleep 2
 ./bin/kafka-server-start.sh $KAFKA_CONFIG &
-sleep 4
+sleep 2
 for t in ${KAFKA_TOPICS[@]}; do
 	./bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic $t
 	./bin/kafka-topics.sh --zookeeper localhost:2181 --create --replication-factor 1 --partitions 1 --topic $t
