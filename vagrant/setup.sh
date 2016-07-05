@@ -24,7 +24,6 @@ sleep 2
 ./bin/kafka-server-start.sh $KAFKA_CONFIG &
 sleep 2
 for t in ${KAFKA_TOPICS[@]}; do
-	./bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic $t
 	./bin/kafka-topics.sh --zookeeper localhost:2181 --create --replication-factor 1 --partitions 1 --topic $t
 done
 popd
