@@ -14,6 +14,7 @@ RUN gpg --export --armor 2B5C1B00 | apt-key add -
 RUN gpg --keyserver pgp.mit.edu --recv-keys 0353B12C
 RUN gpg --export --armor 0353B12C | apt-key add -
 
+RUN add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty universe'
 RUN add-apt-repository -y ppa:webupd8team/java
 RUN apt-get update
 RUN sh -c "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections"
